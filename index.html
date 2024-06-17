@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./src/css/main.css">
+
+
+    <title>Inicio</title>
+</head>
+
+<body>
+    
+    <my-navbar home="index.html" resultado="./gestion/listar.html" contact="./tipogestion/listar.html"></my-navbar>
+
+    <button onclick="handleOpenModal()">Open Modal</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Modal Header</h2>
+            <p>Some content for the modal..</p>
+        </div>
+    </div>
+
+
+    <!-- Scripts  -->
+    <script src="./src/components/navbar/navbar.js"></script>
+    <script src="./src/js/main.js"></script>
+</body>
+</html>
