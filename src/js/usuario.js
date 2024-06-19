@@ -1,4 +1,3 @@
-// Variables
 var g_id_usuario = "";
 
 // Funcion Agregar

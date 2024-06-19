@@ -1,21 +1,17 @@
-// Variables
 var g_id_resultado = "";
 
-// Funcion Agregar
 function agregarResultado(){
-    // Variable para obtener nombre del tipo de gestion desde interfaz
     var nombre_resultado = document.getElementById("txt_nombre_resultado").value;
-    // Agregar api tipo de gestion
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    // variavle para formatear zona horaria
+
     var fechaHoraActual = obtenerFechaHora();
-    // continuamos agregando la api
     const raw =JSON.stringify({
-        "nombre_resultado": nombre_resultado,
+        nombre_resultado,
         "fecha_registro": fechaHoraActual
     });
-    // Metodo post para agregar resultado
+
     const requestOptions = {
         method: 'POST',
         headers: myHeaders,
@@ -35,9 +31,7 @@ function agregarResultado(){
     .catch((error) => console.error(error));
 }
 
-// Funcion Listar
 function listarResultado(){
-    // Metodo get para listar resultados
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -52,9 +46,8 @@ function listarResultado(){
     .catch((error) => console.error(error));
 }
 
-// Funcion Completar fila
 function completarFila(element,index,arr){
-    // Creamos formato para la tabla
+
     arr[index] = document.querySelector("#tbl_resultado tbody").innerHTML += 
     `<tr> 
     <td>${element.id_resultado}</td>
@@ -67,29 +60,27 @@ function completarFila(element,index,arr){
     </tr>`
 }
 
-// Funcion para el ID de actualizar el resultado
 function obtenerIdActualizacion(){
     const queryString = window.location.search;
     const parametros = new URLSearchParams(queryString);
     const p_id_resultado = parametros.get('id');
     g_id_resultado = p_id_resultado;
-    // llamamos a la funcion para obtener datos de actualizacion
+
     obtenerDatosActualizacion(p_id_resultado);
 }
 
-// Funcion para eliminar el id de resultado
 function obtenerIdEliminacion(){
     const queryString = window.location.search;
     const parametros = new URLSearchParams(queryString);
     const p_id_resultado = parametros.get('id');
     g_id_resultado = p_id_resultado;
-    // llamamos a la funcion para eliminar resultado
+
     obtenerDatosEliminacion(p_id_resultado);
 }
 
-// Funcion para obtener datos de eliminacion
+
 function obtenerDatosEliminacion(id_resultado){
-    // Metodo get para obtener datos de eliminacion
+
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -101,15 +92,12 @@ function obtenerDatosEliminacion(id_resultado){
     .catch((error) => console.error(error));
 }
 
-// Funcion para etiqueta de eliminacion
 function completarEtiquetaEliminar(element){
     var nombreResultado = element.nombre_resultado;
     document.getElementById('lbl_eliminar').innerHTML ="¿Desea eliminar este resultado? <b>"+nombreResultado +"</b>";
 }
-
-// Funcion para obtener datos de actualizacion
-function obtenerDatosActualizacion(id_resultado){
-    // Metodo get para obtener datos de actualizacion
+function obtenerDatosActualizacion(id_resultado) {
+    
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -121,23 +109,21 @@ function obtenerDatosActualizacion(id_resultado){
     .catch((error) => console.error(error));
 }
 
-// Funcion para completar formulario de actualizacion
 function completarFormularioActualizar(element){
     var nombreResultado = element.nombre_resultado;
     document.getElementById('txt_nombre_resultado').value = nombreResultado;
 }
 
-// Funcion actualizar
 function actualizarResultado(){
-    // Variable para obtener nombre del resultado desde interfaz
+
     var nombre_resultado = document.getElementById("txt_nombre_resultado").value;
-    // Agregar api resultado
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const raw =JSON.stringify({
         "nombre_resultado": nombre_resultado,
     });
-    // Metodo patch para actualizar resultado
+
     const requestOptions = {
         method: 'PATCH',
         headers: myHeaders,
@@ -157,12 +143,11 @@ function actualizarResultado(){
     .catch((error) => console.error(error));
 }
 
-// Funcion para eliminar resultado
 function eliminarResultado(){
-    // Agregamos api resultado
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    // Metodo delete para eliminar resultado
+
     const requestOptions = {
         method: 'DELETE',
         headers: myHeaders,
@@ -181,7 +166,6 @@ function eliminarResultado(){
     .catch((error) => console.error(error));
 }
 
-// Funcion para formatear la fecha y hora (la que necesita el backend)
 function obtenerFechaHora(){
     var fechaHoraActual = new Date();
     var fechaFormateada = fechaHoraActual.toLocaleDateString('es-ES',{
@@ -196,7 +180,6 @@ function obtenerFechaHora(){
     return fechaFormateada;
 }
 
-// Funcion para mostrar alerta en caso de error
 function mostrarAlerta(mensaje, tipo){
     const alertContainer = document.getElementById('alert-container');
     alertContainer.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
