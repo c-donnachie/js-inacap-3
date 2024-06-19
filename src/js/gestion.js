@@ -1,18 +1,17 @@
-//Variables globales
-var g_id_tipo_gestion = "";
+let g_id_gestion = "";
 let d = document
 
 function agregarGestion() {
-  var id_usuario = document.getElementById("sel_id_usuario").value;
-  var id_cliente = document.getElementById("sel_id_cliente").value;
-  var id_tipo_gestion = document.getElementById("sel_id_tipo_gestion").value;
-  var id_resultado = document.getElementById("sel_id_resultado").value;
-  var comentarios = document.getElementById("txt_comentarios").value;
+  let id_usuario = document.getElementById("sel_id_usuario").value;
+  let id_cliente = document.getElementById("sel_id_cliente").value;
+  let id_tipo_gestion = document.getElementById("sel_id_tipo_gestion").value;
+  let id_resultado = document.getElementById("sel_id_resultado").value;
+  let comentarios = document.getElementById("txt_comentarios").value;
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
-  var fechaHoraActual = obtenerFechaHora();
+  let fechaHoraActual = obtenerFechaHora();
 
   const raw = JSON.stringify({
     id_usuario,
@@ -44,12 +43,12 @@ function agregarGestion() {
 }
 
 function listarGestion() {
-  var myHeaders = new Headers();
+  let myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  var raw = JSON.stringify({
+  let raw = JSON.stringify({
     "query": "select ges.id_gestion as id_gestion,cli.id_cliente, ges.comentarios as comentarios,CONCAT(cli.nombres, ' ',cli.apellidos) as cliente,CONCAT(usu.nombres,' ' ,usu.apellidos) as usuario,tge.nombre_tipo_gestion as nombre_tipo_gestion,res.nombre_resultado as nombre_resultado,ges.fecha_registro as fecha_registro from gestion ges,usuario usu,cliente cli,tipo_gestion tge,resultado res where ges.id_usuario = usu.id_usuario and ges.id_cliente = cli.id_cliente and ges.id_tipo_gestion = tge.id_tipo_gestion and ges.id_resultado = res.id_resultado "
   });
-  var requestOptions = {
+  let requestOptions = {
     method: 'POST',
     headers: myHeaders,
     body: raw,
@@ -86,7 +85,7 @@ function obtenerIdActualizar() {
   const queryString = window.location.search;
   const parametros = new URLSearchParams(queryString);
   const p_id_tipo_gestion = parametros.get('id');
-  g_id_tipo_gestion = p_id_tipo_gestion;
+  g_id_gestion = p_id_tipo_gestion;
   obtenerDatosActualizar(p_id_tipo_gestion);
 
 }
@@ -94,8 +93,7 @@ function obtenerIdEliminar() {
   const queryString = window.location.search;
   const parametros = new URLSearchParams(queryString);
   const p_id_tipo_gestion = parametros.get('id');
-  console.log(p_id_tipo_gestion)
-  g_id_tipo_gestion = p_id_tipo_gestion
+  g_id_gestion = p_id_tipo_gestion
   obtenerDatosEliminar(p_id_tipo_gestion)
 
 }
@@ -126,22 +124,30 @@ function obtenerDatosActualizar(p_id_tipo_gestion) {
 
 }
 function completarEtiqueta(element, index, arr) {
-  var nombre_tipo_gestion = element.nombre_tipo_gestion;
-  document.getElementById('lbl_eliminar').innerHTML = "¿Desea eliminar esta gestión? <b>" + g_id_tipo_gestion + "</b>";
+  let nombre_tipo_gestion = element.nombre_tipo_gestion;
+  document.getElementById('lbl_eliminar').innerHTML = "¿Desea eliminar esta gestión? <b>" + g_id_gestion + "</b>";
 }
 function completarFormulario(element, index, arr) {
-  var comentarios = element.comentarios;
+  let comentarios = element.comentarios;
   document.getElementById('txt_comentarios').value = comentarios;
 
 }
-function actualizarTipoGestion() {
-  var nombre_tipo_gestion = document.getElementById("txt_nombre_tipo_gestion").value;
+function actualizarGestion() {
+  let id_usuario = document.getElementById("sel_id_usuario").value;
+  let id_cliente = document.getElementById("sel_id_cliente").value;
+  let id_tipo_gestion = document.getElementById("sel_id_tipo_gestion").value;
+  let id_resultado = document.getElementById("sel_id_resultado").value;
+  let comentarios = document.getElementById("txt_comentarios").value;
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
   const raw = JSON.stringify({
-    "nombre_tipo_gestion": nombre_tipo_gestion
+    id_usuario,
+    id_cliente,
+    id_tipo_gestion,
+    id_resultado,
+    comentarios
   });
 
   const requestOptions = {
@@ -151,7 +157,7 @@ function actualizarTipoGestion() {
     redirect: "follow"
   };
 
-  fetch("http://144.126.210.74:8080/api/tipo_gestion/" + g_id_tipo_gestion, requestOptions)
+  fetch("http://144.126.210.74:8080/api/gestion/" + g_id_gestion, requestOptions)
     .then((response) => {
       if (response.status == 200) {
         location.href = "listar.html";
@@ -172,7 +178,7 @@ function eliminarGestion() {
     redirect: "follow"
   };
 
-  fetch("http://144.126.210.74:8080/api/gestion/" + g_id_tipo_gestion, requestOptions)
+  fetch("http://144.126.210.74:8080/api/gestion/" + g_id_gestion, requestOptions)
     .then((response) => {
       if (response.status == 200) {
         location.href = "listar.html";
@@ -198,10 +204,13 @@ function cargarSelectResultado() {
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
+
 function completarOpcionesResultado(element, index, arr) {
+  console.log(element.nombre_resultado)
   arr[index] = document.querySelector("#sel_id_resultado").innerHTML +=
     `<option value='${element.id_resultado}'>${element.nombre_resultado}</option>`
 }
+
 
 function cargarListasDesplegables() {
   cargarSelectResultado();
@@ -230,6 +239,7 @@ function completarOpcionesTipoGestion(element, index, arr) {
   arr[index] = document.querySelector("#sel_id_tipo_gestion").innerHTML +=
     `<option value='${element.id_tipo_gestion}'>${element.nombre_tipo_gestion}</option>`
 }
+
 function cargarSelectUsuario() {
   const requestOptions = {
     method: "GET",
@@ -271,8 +281,8 @@ function completarOpcionesCliente(element, index, arr) {
 }
 
 function obtenerFechaHora() {
-  var fechaActual = new Date();
-  var fechaFormateada = fechaActual.toLocaleString('es-ES', {
+  let fechaActual = new Date();
+  let fechaFormateada = fechaActual.toLocaleString('es-ES', {
     hour12: false,
     year: 'numeric',
     month: '2-digit',
