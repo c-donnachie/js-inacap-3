@@ -8,26 +8,26 @@ function agregarGestion() {
   let id_resultado = document.getElementById("sel_id_resultado").value;
   let comentarios = document.getElementById("txt_comentarios").value;
 
-  // if (!id_usuario.trim()) {
-  //   mostrarAlerta("El campo ID Usuario no puede estar vacío");
-  //   return;
-  // }
-  // if (!id_cliente.trim()) {
-  //   mostrarAlerta("El campo ID Cliente no puede estar vacío");
-  //   return;
-  // }
-  // if (!id_tipo_gestion.trim()) {
-  //   mostrarAlerta("El campo ID Tipo de Gestión no puede estar vacío");
-  //   return;
-  // }
-  // if (!id_resultado.trim()) {
-  //   mostrarAlerta("El campo ID Resultado no puede estar vacío");
-  //   return;
-  // }
-  // if (!comentarios.trim()) {
-  //   mostrarAlerta("El campo Comentarios no puede estar vacío");
-  //   return;
-  // }
+  if (!id_usuario.trim()) {
+    mostrarAlerta("El campo usuario no puede estar vacío", "danger");
+    return;
+  }
+  if (!id_cliente.trim()) {
+    mostrarAlerta("El campo cliente no puede estar vacío", "danger");
+    return;
+  }
+  if (!id_tipo_gestion.trim()) {
+    mostrarAlerta("El campo tipo de Gestión no puede estar vacío", "danger");
+    return;
+  }
+  if (!id_resultado.trim()) {
+    mostrarAlerta("El campo resultado no puede estar vacío", "danger");
+    return;
+  }
+  if (!comentarios.trim()) {
+    mostrarAlerta("El campo comentarios no puede estar vacío", "danger");
+    return;
+  }
 
 
   const myHeaders = new Headers();
@@ -160,6 +160,11 @@ function actualizarGestion() {
   let id_tipo_gestion = document.getElementById("sel_id_tipo_gestion").value;
   let id_resultado = document.getElementById("sel_id_resultado").value;
   let comentarios = document.getElementById("txt_comentarios").value;
+
+  if (!id_usuario.trim()) {
+    mostrarAlerta("El campo usuario no puede estar vacío", "danger");
+    return;
+  }
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");

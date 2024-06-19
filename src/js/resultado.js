@@ -4,7 +4,7 @@ function agregarResultado() {
     var nombre_resultado = document.getElementById("txt_nombre_resultado").value;
 
     if (!nombre_resultado.trim()) {
-        mostrarAlerta("El campo nombre del resultado no puede estar vacío");
+        mostrarAlerta("El campo nombre del resultado no puede estar vacío", "danger");
         return;
     }
 

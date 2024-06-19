@@ -2,10 +2,8 @@ class GoBack extends HTMLElement {
     constructor() {
         super();
 
-        // Creamos un shadow root
         this.attachShadow({ mode: 'open' });
 
-        // Definimos el contenido inicial del componente con estilos
         this.shadowRoot.innerHTML = `
             <style>
                 div {
