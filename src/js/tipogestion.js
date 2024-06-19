@@ -153,23 +153,18 @@ function eliminarTipoGestion() {
   }
 
   fetch("http://144.126.210.74:8080/api/tipo_gestion/" + g_id_tipo_gestion, requestOptions)
-    .then(response => {
+    .then((response) => {
       if (response.status == 200) {
         location.href = "listar.html";
-      } else {
-        return response.json().then(data => {
-          if (data.error && data.error.code === "ER_ROW_IS_REFERENCED_2") {
-            alert("No se puede eliminar el tipo de gestión porque está siendo utilizado en gestiones.");
-          } else {
-            alert(`Error: ${data.message || 'No se pudo eliminar la gestión'}`);
-          }
-          throw new Error(data.message || 'No se pudo eliminar la gestión');
-        });
+      }
+      if (response.status == 400) {
+        mostrarAlerta("No se puede eliminar el tipo de gestion, debido a que sus datos estan relacionado a otros", "danger")
       }
     })
-    .then(result => console.log(result))
-    .catch(error => console.error('Error:', error));
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
 }
+
 
 function obtenerFechaHora() {
   let fechaActual = new Date();

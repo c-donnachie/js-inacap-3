@@ -18,15 +18,35 @@
           <go-back></go-back>
           <h1>Eliminar tipo gestión</h1>
         </div>
-        
-        <hr>
 
         <div class=" alert alert-danger" id="lbl_eliminar">
 
         </div>
-        <input type="button" value="Eliminar" class="btn btn-danger" onclick="eliminarTipoGestion();">
+        <input type="button" class="btn btn-danger" value="Eliminar" data-bs-toggle="modal"
+            data-bs-target="#confirmUpdateModal">
         <input type="button" value="Cancelar" class="btn btn-secondary" onclick="javascript:history.back();">
+    </div>
 
+    <!--Modal de confirmacion-->
+    <div class="modal fade" id="confirmUpdateModal" tabindex="-1" aria-labelledby="confirmUpdateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmUpdateModalLabel">Eliminar usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de eliminar al usuario?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="eliminarTipoGestion();">Eliminar</button>
+
+                    <div id="alert-container"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Script -->
