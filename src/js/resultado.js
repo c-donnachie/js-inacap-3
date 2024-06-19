@@ -1,13 +1,18 @@
 var g_id_resultado = "";
 
-function agregarResultado(){
+function agregarResultado() {
     var nombre_resultado = document.getElementById("txt_nombre_resultado").value;
+
+    if (!nombre_resultado.trim()) {
+        mostrarAlerta("El campo nombre del resultado no puede estar vacío");
+        return;
+    }
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var fechaHoraActual = obtenerFechaHora();
-    const raw =JSON.stringify({
+    const raw = JSON.stringify({
         nombre_resultado,
         "fecha_registro": fechaHoraActual
     });
@@ -19,37 +24,37 @@ function agregarResultado(){
         redirect: 'follow'
     };
     fetch("http://144.126.210.74:8080/api/resultado", requestOptions)
-    .then((response)=>{
-        if(response.status == 200){
-            location.href = "listar.html";
-        }
-        if(response.status == 400){
-            mostrarAlerta("No se pudo agregar el resultado");
-        }
-    })
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+        .then((response) => {
+            if (response.status == 200) {
+                location.href = "listar.html";
+            }
+            if (response.status == 400) {
+                mostrarAlerta("No se pudo agregar el resultado");
+            }
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function listarResultado(){
+function listarResultado() {
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
     fetch("http://144.126.210.74:8080/api/resultado?_size=200", requestOptions)
-    .then(response => response.json())
-    .then((json) => {
-        json.forEach(completarFila);
-        $('#tbl_resultado').DataTable();
-    })
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+        .then(response => response.json())
+        .then((json) => {
+            json.forEach(completarFila);
+            $('#tbl_resultado').DataTable();
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function completarFila(element,index,arr){
+function completarFila(element, index, arr) {
 
-    arr[index] = document.querySelector("#tbl_resultado tbody").innerHTML += 
-    `<tr> 
+    arr[index] = document.querySelector("#tbl_resultado tbody").innerHTML +=
+        `<tr> 
     <td>${element.id_resultado}</td>
     <td>${element.nombre_resultado}</td>
     <td>${element.fecha_registro}</td>
@@ -60,7 +65,7 @@ function completarFila(element,index,arr){
     </tr>`
 }
 
-function obtenerIdActualizacion(){
+function obtenerIdActualizacion() {
     const queryString = window.location.search;
     const parametros = new URLSearchParams(queryString);
     const p_id_resultado = parametros.get('id');
@@ -69,7 +74,7 @@ function obtenerIdActualizacion(){
     obtenerDatosActualizacion(p_id_resultado);
 }
 
-function obtenerIdEliminacion(){
+function obtenerIdEliminacion() {
     const queryString = window.location.search;
     const parametros = new URLSearchParams(queryString);
     const p_id_resultado = parametros.get('id');
@@ -79,48 +84,48 @@ function obtenerIdEliminacion(){
 }
 
 
-function obtenerDatosEliminacion(id_resultado){
+function obtenerDatosEliminacion(id_resultado) {
 
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-    fetch("http://144.126.210.74:8080/api/resultado/"+id_resultado, requestOptions)
-    .then((response) => response.json())
-    .then((json) => json.forEach(completarEtiquetaEliminar))
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+    fetch("http://144.126.210.74:8080/api/resultado/" + id_resultado, requestOptions)
+        .then((response) => response.json())
+        .then((json) => json.forEach(completarEtiquetaEliminar))
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function completarEtiquetaEliminar(element){
+function completarEtiquetaEliminar(element) {
     var nombreResultado = element.nombre_resultado;
-    document.getElementById('lbl_eliminar').innerHTML ="¿Desea eliminar este resultado? <b>"+nombreResultado +"</b>";
+    document.getElementById('lbl_eliminar').innerHTML = "¿Desea eliminar este resultado? <b>" + nombreResultado + "</b>";
 }
 function obtenerDatosActualizacion(id_resultado) {
-    
+
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-    fetch("http://144.126.210.74:8080/api/resultado/"+id_resultado, requestOptions)
-    .then((response) => response.json())
-    .then((json) => json.forEach(completarFormularioActualizar))
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+    fetch("http://144.126.210.74:8080/api/resultado/" + id_resultado, requestOptions)
+        .then((response) => response.json())
+        .then((json) => json.forEach(completarFormularioActualizar))
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function completarFormularioActualizar(element){
+function completarFormularioActualizar(element) {
     var nombreResultado = element.nombre_resultado;
     document.getElementById('txt_nombre_resultado').value = nombreResultado;
 }
 
-function actualizarResultado(){
+function actualizarResultado() {
 
     var nombre_resultado = document.getElementById("txt_nombre_resultado").value;
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    const raw =JSON.stringify({
+    const raw = JSON.stringify({
         "nombre_resultado": nombre_resultado,
     });
 
@@ -130,20 +135,20 @@ function actualizarResultado(){
         body: raw,
         redirect: 'follow'
     };
-    fetch("http://144.126.210.74:8080/api/resultado/"+g_id_resultado, requestOptions)
-    .then((response)=>{
-        if(response.status == 200){
-            location.href = "listar.html";
-        }
-        if(response.status == 400){
-            mostrarAlerta("No se pudo actualizar el resultado");
-        }
-    })
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+    fetch("http://144.126.210.74:8080/api/resultado/" + g_id_resultado, requestOptions)
+        .then((response) => {
+            if (response.status == 200) {
+                location.href = "listar.html";
+            }
+            if (response.status == 400) {
+                mostrarAlerta("No se pudo actualizar el resultado");
+            }
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function eliminarResultado(){
+function eliminarResultado() {
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -153,22 +158,22 @@ function eliminarResultado(){
         headers: myHeaders,
         redirect: 'follow'
     };
-    fetch("http://144.126.210.74:8080/api/resultado/"+g_id_resultado, requestOptions)
-    .then((response)=>{
-        if(response.status == 200){
-            location.href = "listar.html";
-        }
-        if(response.status == 400){
-            mostrarAlerta("No se puede eliminar el tipo de gestión")
-        }
-    })
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+    fetch("http://144.126.210.74:8080/api/resultado/" + g_id_resultado, requestOptions)
+        .then((response) => {
+            if (response.status == 200) {
+                location.href = "listar.html";
+            }
+            if (response.status == 400) {
+                mostrarAlerta("No se puede eliminar este resultado")
+            }
+        })
+        .then((result) => console.log(result))
+        .catch((error) => console.error(error));
 }
 
-function obtenerFechaHora(){
+function obtenerFechaHora() {
     var fechaHoraActual = new Date();
-    var fechaFormateada = fechaHoraActual.toLocaleDateString('es-ES',{
+    var fechaFormateada = fechaHoraActual.toLocaleDateString('es-ES', {
         hour12: false,
         year: 'numeric',
         month: '2-digit',
@@ -176,11 +181,11 @@ function obtenerFechaHora(){
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit'
-    }).replace(/(\d+)\/(\d+)\/(\d+)\,\s*(\d+):(\d+):(\d+)/,'$3-$2-$1 $4:$5:$6');
+    }).replace(/(\d+)\/(\d+)\/(\d+)\,\s*(\d+):(\d+):(\d+)/, '$3-$2-$1 $4:$5:$6');
     return fechaFormateada;
 }
 
-function mostrarAlerta(mensaje, tipo){
+function mostrarAlerta(mensaje, tipo) {
     const alertContainer = document.getElementById('alert-container');
     alertContainer.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 }

@@ -1,33 +1,42 @@
 let g_id_tipo_gestion = "";
 
 function agregarTipoGestion() {
+  var nombre_tipo_gestion = document.getElementById("txt_nombre_tipo_gestion").value;
 
-  let nombre_tipo_gestion = document.getElementById("txt_nombre_tipo_gestion").value;
+  if (!nombre_tipo_gestion) {
+    mostrarAlerta("El nombre del tipo de gestión es obligatorio", "danger");
+    return;
+  }
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
+  var fechaHoraActual = obtenerFechaHora();
+
   const raw = JSON.stringify({
     "nombre_tipo_gestion": nombre_tipo_gestion,
-    "fecha_registro": "2024-04-17 12:16:00"
+    "fecha_registro": fechaHoraActual
   });
 
   const requestOptions = {
-    method: "POST",
+    method: 'POST',
     headers: myHeaders,
     body: raw,
-    redirect: "follow"
+    redirect: 'follow'
   };
-
   fetch("http://144.126.210.74:8080/api/tipo_gestion", requestOptions)
     .then((response) => {
       if (response.status == 200) {
         location.href = "listar.html";
       }
+      if (response.status == 400) {
+        mostrarAlerta("No se pudo agregar el tipo de gestión");
+      }
     })
-    .then((result) => console.log(result))
+    .then(result => console.log(result))
     .catch((error) => console.error(error));
 }
+
 function listarTipoGestion() {
   const requestOptions = {
     method: "GET",
@@ -160,4 +169,24 @@ function eliminarTipoGestion() {
     })
     .then(result => console.log(result))
     .catch(error => console.error('Error:', error));
+}
+
+function obtenerFechaHora() {
+  let fechaActual = new Date();
+  let fechaFormateada = fechaActual.toLocaleString('es-ES', {
+    hour12: false,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  }).replace(/(\d+)\/(\d+)\/(\d+)\,\s*(\d+):(\d+):(\d+)/, '$3-$2-$1 $4:$5:$6');
+
+  return fechaFormateada;
+}
+
+function mostrarAlerta(mensaje, tipo) {
+  const alertContainer = document.getElementById('alert-container');
+  alertContainer.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 }

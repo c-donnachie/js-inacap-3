@@ -1,4 +1,4 @@
-class MyTitle extends HTMLElement {
+class MyNavbar extends HTMLElement {
     constructor() {
         super();
 
@@ -28,7 +28,7 @@ class MyTitle extends HTMLElement {
                     left: 0;
                     width: 100%;
                     /* position: fixed; */
-                    text-align: center;
+                    justify-content: center;
                     padding: 20px;
                     background-color: #333;
                     color: white;
@@ -46,7 +46,7 @@ class MyTitle extends HTMLElement {
                 }
 
                 nav a:hover {
-                    background-color: #555;
+                    color: #f5f5f5;
                 }
             </style>
             <header class="header">
@@ -93,4 +93,4 @@ class MyTitle extends HTMLElement {
     }
 }
 
-customElements.define('my-navbar', MyTitle);
+customElements.define('my-navbar', MyNavbar);

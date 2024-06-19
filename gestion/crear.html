@@ -59,21 +59,39 @@
                         <input type="text" class="form-control" id="txt_comentarios">
                         <div id="ayuda_nombre" class="form-text">Ingrese comentario.</div>
                     </div>
+                    <input type="button" class="btn btn-primary" value="Enviar" data-bs-toggle="modal"
+                        data-bs-target="#confirmUpdateModal">
 
-                    
-                    <input 
-                    type="button"
-                    value="Agregar gestión" 
-                    class="btn btn-primary" 
-                    onclick="agregarGestion()
-                    ">
-
-                    <input type="button" value="Cancelar" class="btn btn-warning" onclick="javascript:history.back();">
-
+                    <input type="button" class="btn btn-secondary" value="Cancelar"
+                        onclick="javascript:history.back();">
                 </form>
             </div>
         </div>
 
+    </div>
+
+    <!--Modal de confirmacion-->
+    <div class="modal fade" id="confirmUpdateModal" tabindex="-1" aria-labelledby="confirmUpdateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmUpdateModalLabel">Actualizar resultado</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de crear el resultado?
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-primary" onclick="agregarGestion()">Enviar</button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                    <div id="alert-container"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts  -->

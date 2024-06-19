@@ -15,34 +15,36 @@
 
 <body onload="listarTipoGestion();">
 
-<!-- Navbar -->
-<my-navbar 
-home="../index.html" 
-tipo_gestion="./listar.html" 
-clientes="../cliente/listar.html"
-usuarios="../usuario/listar.html" 
-resultados="../resultado/listar.html" 
-gestiones="../gestion/listar.html"></my-navbar>
-<!--  End Navbar -->
+  <!-- Navbar -->
+  <my-navbar home="../index.html" tipo_gestion="./listar.html" clientes="../cliente/listar.html"
+    usuarios="../usuario/listar.html" resultados="../resultado/listar.html"
+    gestiones="../gestion/listar.html"></my-navbar>
+  <!--  End Navbar -->
 
   <div class="container">
-    <h1>Lista de tipo de gestión</h1>
+    <h1>Lista tipo de gestiones</h1>
     <hr>
-    <a href="crear.html" class="btn btn-primary">Nuevo</a>
+    <div>
+      <a href="crear.html" class="btn btn-primary">Nueva tipo gestion</a>
+    </div>
+    <br>
+    <div class="card">
+      <div class="card-header">Lista de tipo de gestiones</div>
+      <div class="card-body">
 
-    <table class="display" id="tbl_tipo_gestion">
-      <thead>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Fecha</th>
-        <th>Opciones</th>
-      </thead>
-      <tbody id="data">
+        <table class="display" id="tbl_tipo_gestion">
+          <thead>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>FECHA</th>
+            <th>OPCIONES</th>
+          </thead>
+          <tbody id="data">
 
-      </tbody>
-
-    </table>
-
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts  -->

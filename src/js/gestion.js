@@ -8,6 +8,28 @@ function agregarGestion() {
   let id_resultado = document.getElementById("sel_id_resultado").value;
   let comentarios = document.getElementById("txt_comentarios").value;
 
+  // if (!id_usuario.trim()) {
+  //   mostrarAlerta("El campo ID Usuario no puede estar vacío");
+  //   return;
+  // }
+  // if (!id_cliente.trim()) {
+  //   mostrarAlerta("El campo ID Cliente no puede estar vacío");
+  //   return;
+  // }
+  // if (!id_tipo_gestion.trim()) {
+  //   mostrarAlerta("El campo ID Tipo de Gestión no puede estar vacío");
+  //   return;
+  // }
+  // if (!id_resultado.trim()) {
+  //   mostrarAlerta("El campo ID Resultado no puede estar vacío");
+  //   return;
+  // }
+  // if (!comentarios.trim()) {
+  //   mostrarAlerta("El campo Comentarios no puede estar vacío");
+  //   return;
+  // }
+
+
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
 
@@ -206,7 +228,6 @@ function cargarSelectResultado() {
 }
 
 function completarOpcionesResultado(element, index, arr) {
-  console.log(element.nombre_resultado)
   arr[index] = document.querySelector("#sel_id_resultado").innerHTML +=
     `<option value='${element.id_resultado}'>${element.nombre_resultado}</option>`
 }
@@ -293,4 +314,9 @@ function obtenerFechaHora() {
   }).replace(/(\d+)\/(\d+)\/(\d+)\,\s*(\d+):(\d+):(\d+)/, '$3-$2-$1 $4:$5:$6');
 
   return fechaFormateada;
+}
+
+function mostrarAlerta(mensaje, tipo) {
+  const alertContainer = document.getElementById('alert-container');
+  alertContainer.innerHTML = `<div class="alert alert-${tipo} alert-dismissible fade show" role="alert">${mensaje}<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>`;
 }
